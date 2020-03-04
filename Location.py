@@ -5,10 +5,10 @@ class Location:
         self.__y = y
     
     def getX(self):
-        return self.__x
+        return int(self.__x)
 
     def getY(self):
-        return self.__y
+        return int(self.__y)
 
     def setX(self,x:int):
         self.__x = x

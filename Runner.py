@@ -1,3 +1,3 @@
-from Simulator import Simulator
+from OceanSimulation import OceanSimulation
 
-Simulator().run()
+OceanSimulation().run()

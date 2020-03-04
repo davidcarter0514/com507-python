@@ -10,4 +10,8 @@ class Agent(ABC):
 
     def setLocation(self,location:Location):
         self._location = location
+
+    @abstractmethod
+    def act(self):
+        pass
         
