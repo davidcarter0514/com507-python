@@ -1,7 +1,7 @@
 class Config:
     sim_name = 'Simulator'
-    initial_sim_speed = 1
+    initial_sim_speed = 2
     min_sim_speed = 1
     max_sim_speed = 5
-    world_height = 5
-    world_width = 5
+    world_height = 20
+    world_width = 20

@@ -1,0 +1,6 @@
+class MarsConfig:
+    SEED = 1
+    ROVER_INIT_ENERGY = 100
+    ROVER_MOVE_ENERGY = 5
+    ROCK_MAX_ENERGY = 10
+    ROCK_MIN_ENERGY = 1

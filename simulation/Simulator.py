@@ -1,5 +1,5 @@
 from abc import ABC,abstractmethod
-from Config import Config
+from simulation.Config import Config
 from time import sleep
 
 class Simulator():
@@ -13,16 +13,19 @@ class Simulator():
         #prepare, then create thread
         self._isRunning = True
         self._prepare()
-        while self._isRunning == True:
+        #Run while true
+        while self._isRunning:
             #update, render, then sleep 
+            print("in loop")
             self._update()
             self._render()
             sleep(self.__calcSleepTime())
-            self._isRunning = False #Testing
+        print("after loop")
 
     def __calcSleepTime(self):
         if self._speed > Config.max_sim_speed:
-            return 0 #i.e. max speed - max speed = 0
+            #i.e. max speed - max speed = 0, sleep for at least 1
+            return 1 
         elif self._speed < Config.min_sim_speed:
             return Config.max_sim_speed - Config.min_sim_speed
         else:
@@ -30,12 +33,10 @@ class Simulator():
 
     @abstractmethod
     def _prepare(self):
-        print("Preparing...") #testing
         pass
 
     @abstractmethod
     def _render(self):
-        print("Rendering...") #testing
         pass
 
     @abstractmethod
@@ -44,6 +45,5 @@ class Simulator():
 
     @abstractmethod
     def _update(self):
-        print("Updating...") #testing
         pass
 

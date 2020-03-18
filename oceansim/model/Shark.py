@@ -1,6 +1,6 @@
-from Fish import Fish
-from Location import Location
-from Ocean import Ocean
+from .Fish import Fish
+from simulation.model.Location import Location
+from .Ocean import Ocean
 
 class Shark(Fish):
     def __init__(self,location:Location):

@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
-from Location import Location
-from Agent import Agent
+from .Location import Location
+from .Agent import Agent
 
 class Environment(ABC):
     #Constructor

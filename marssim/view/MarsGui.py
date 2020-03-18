@@ -1,46 +1,48 @@
 from tkinter import *
-from tkinter import messagebox
 import time
-from Config import Config
-from Ocean import Ocean
-from Location import Location
+from simulation.Config import Config
+from simulation.model.Location import Location
+from marssim.model.Mars import Mars
+from marssim.model.Rock import Rock
+from marssim.model.Rover import Rover
+from marssim.model.Spaceship import Spaceship
 
-class Gui(Tk):
+class MarsGui(Tk):
 
     # initialise window
-    def __init__(self,ocean:Ocean):
+    def __init__(self, mars:Mars):
         super().__init__()
-        self.interaction_state = None 
+        self.interaction_state = None
         self.observers = []
-        
-        # load resources
-        
+
         # set window attributes
         self.title("Simulator")
         self.configure(height=1000,width=1000)
 
         # add components
-        # add a for loop based on Ocean Simulation
         self.__add_environment_frame()
-        self.__add_grid_label(ocean)
-        self.__add_button_frame(ocean)
+        self.__add_grid_label(mars)
+        self.__add_button_frame()
         self.__add_start_button()
         self.__add_stop_button()
         self.__add_step_button()
         self.__add_reset_button()
+        print("finished gui constructor")
 
     def __add_environment_frame(self):
         self.environment_frame = Frame()
         self.environment_frame.grid(row = 0, column=0)
 
-    def __add_grid_label(self,ocean):
+    def __add_grid_label(self,mars):
         self.label_grid = []
-        for a in range(ocean.getHeight()):
-            self.label_grid.append([None]*ocean.getWidth())
+        marsWidth = mars.getWidth()
+        marsHeight = mars.getHeight()
+        for a in range(0,marsHeight,1):
+            self.label_grid.append([None]*marsWidth)
 
         # populate label grid with labels and format if none empty
-        for i in range (0,ocean.getWidth(),1):
-            for j in range(0,ocean.getHeight(),1):
+        for i in range (0,marsWidth,1):
+            for j in range(0,marsHeight,1):
 
                 self.label_grid[i][j] = Label(self.environment_frame)
                 self.label_grid[i][j].grid(row=i,column=j,sticky=W+E)
@@ -51,11 +53,17 @@ class Gui(Tk):
                         bd=1,
                         relief='ridge'
                         )
-                #check if not empty
-                if ocean.getAgent(Location(i,j)) != None :
-                    self.label_grid[i][j].config(bg='#faa',text='shark')
+                # check if not empty
+                if isinstance(mars.getAgent(Location(i,j)),Rock) :
+                    self.label_grid[i][j].config(bg='#000',text='Rock')
+                elif isinstance(mars.getAgent(Location(i,j)),Rover) :
+                    self.label_grid[i][j].config(bg='#0a0',text='Rover')
+                elif isinstance(mars.getAgent(Location(i,j)),Spaceship) :
+                    self.label_grid[i][j].config(bg='#f00',text='Spaceship')
+                else :
+                    self.label_grid[i][j].config(bg='#ddd',text='')
                 
-    def __add_button_frame(self,ocean):
+    def __add_button_frame(self):
         self.button_frame = Frame()
         self.button_frame.grid(
                 row = 1,
@@ -94,6 +102,13 @@ class Gui(Tk):
             text="STOP"
             )
 
+        #events
+        self.stop_button.bind("<ButtonRelease-1>", self.__stop_button_clicked) 
+        
+    def __stop_button_clicked(self,event):
+        self.interaction_state = "STOP"
+        self.notify_observer()
+
     def __add_step_button(self):
         #create
         self.step_button = Button(self.button_frame)
@@ -105,6 +120,13 @@ class Gui(Tk):
             bg="#fed",
             text="STEP"
             )
+
+        #events
+        self.step_button.bind("<ButtonRelease-1>", self.__step_button_clicked) 
+        
+    def __step_button_clicked(self,event):
+        self.interaction_state = "STEP"
+        self.notify_observer()
 
     def __add_reset_button(self):
         #create
@@ -118,13 +140,13 @@ class Gui(Tk):
             text="RESET"
             )
 
-    # def __up_button_clicked(self,event):
-    #     self.plane_y_change = -1
-
-    def refresh(self,ocean):
+    def refresh(self,mars):
         # populate label grid with labels and format if none empty
-        for i in range (0,ocean.getWidth(),1):
-            for j in range(0,ocean.getHeight(),1):
+        marsWidth = mars.getWidth()
+        marsHeight = mars.getHeight()
+
+        for i in range (0,marsWidth,1):
+            for j in range(0,marsHeight,1):
 
                 self.label_grid[i][j] = Label(self.environment_frame)
                 self.label_grid[i][j].grid(row=i,column=j,sticky=W+E)
@@ -136,8 +158,10 @@ class Gui(Tk):
                         relief='ridge'
                         )
                 #check if not empty and format
-                if ocean.getAgent(Location(i,j)) != None :
+                if isinstance(mars.getAgent(Location(i,j)),Shark) :
                     self.label_grid[i][j].config(bg='#faa',text='shark')
+                elif isinstance(mars.getAgent(Location(i,j)),Plankton) :
+                    self.label_grid[i][j].config(bg='#afa',text='plant')
                 else:
                     self.label_grid[i][j].config(bg='#fff',text='')
     

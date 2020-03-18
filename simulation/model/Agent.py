@@ -1,4 +1,4 @@
-from Location import Location
+from .Location import Location
 from abc import ABC, abstractmethod
 
 class Agent(ABC):
@@ -12,6 +12,6 @@ class Agent(ABC):
         self._location = location
 
     @abstractmethod
-    def act(self):
+    def act(self,environment):
         pass
         
