@@ -5,7 +5,7 @@ from marssim.MarsConfig import MarsConfig
 class Rock(Agent):
     def __init__(self, location):
         super().__init__(location)
-        self.rock_energy = MarsConfig.ROCK_MAX_ENERGY
+        self.__rock_energy = MarsConfig.ROCK_MAX_ENERGY
 
     def act(self):
         # Decrease Energy, until at min energy

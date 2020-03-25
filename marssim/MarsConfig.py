@@ -4,3 +4,5 @@ class MarsConfig:
     ROVER_MOVE_ENERGY = 5
     ROCK_MAX_ENERGY = 10
     ROCK_MIN_ENERGY = 1
+    ROCK_SPAWN_RATE = 50
+    INITIAL_ROVERS = 3

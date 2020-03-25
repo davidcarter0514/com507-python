@@ -55,7 +55,7 @@ class MarsGui(Tk):
                         )
                 # check if not empty
                 if isinstance(mars.getAgent(Location(i,j)),Rock) :
-                    self.label_grid[i][j].config(bg='#000',text='Rock')
+                    self.label_grid[i][j].config(bg='#000',fg='#fff',text='Rock')
                 elif isinstance(mars.getAgent(Location(i,j)),Rover) :
                     self.label_grid[i][j].config(bg='#0a0',text='Rover')
                 elif isinstance(mars.getAgent(Location(i,j)),Spaceship) :
