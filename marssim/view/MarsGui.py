@@ -35,14 +35,14 @@ class MarsGui(Tk):
 
     def __add_grid_label(self,mars):
         self.label_grid = []
-        marsWidth = mars.getWidth()
-        marsHeight = mars.getHeight()
-        for a in range(0,marsHeight,1):
-            self.label_grid.append([None]*marsWidth)
+        mars_width = mars.get_width()
+        mars_height = mars.get_height()
+        for a in range(0,mars_height,1):
+            self.label_grid.append([None]*mars_width)
 
         # populate label grid with labels and format if none empty
-        for i in range (0,marsWidth,1):
-            for j in range(0,marsHeight,1):
+        for i in range (0,mars_width,1):
+            for j in range(0,mars_height,1):
 
                 self.label_grid[i][j] = Label(self.environment_frame)
                 self.label_grid[i][j].grid(row=i,column=j,sticky=W+E)
@@ -54,11 +54,11 @@ class MarsGui(Tk):
                         relief='ridge'
                         )
                 # check if not empty
-                if isinstance(mars.getAgent(Location(i,j)),Rock) :
+                if isinstance(mars.get_agent(Location(i,j)),Rock) :
                     self.label_grid[i][j].config(bg='#000',fg='#fff',text='Rock')
-                elif isinstance(mars.getAgent(Location(i,j)),Rover) :
+                elif isinstance(mars.get_agent(Location(i,j)),Rover) :
                     self.label_grid[i][j].config(bg='#0a0',text='Rover')
-                elif isinstance(mars.getAgent(Location(i,j)),Spaceship) :
+                elif isinstance(mars.get_agent(Location(i,j)),Spaceship) :
                     self.label_grid[i][j].config(bg='#f00',text='Spaceship')
                 else :
                     self.label_grid[i][j].config(bg='#ddd',text='')
@@ -142,11 +142,11 @@ class MarsGui(Tk):
 
     def refresh(self,mars):
         # populate label grid with labels and format if none empty
-        marsWidth = mars.getWidth()
-        marsHeight = mars.getHeight()
+        mars_width = mars.get_width()
+        mars_height = mars.get_height()
 
-        for i in range (0,marsWidth,1):
-            for j in range(0,marsHeight,1):
+        for i in range (0,mars_width,1):
+            for j in range(0,mars_height,1):
 
                 self.label_grid[i][j] = Label(self.environment_frame)
                 self.label_grid[i][j].grid(row=i,column=j,sticky=W+E)
@@ -157,13 +157,15 @@ class MarsGui(Tk):
                         bd=1,
                         relief='ridge'
                         )
-                #check if not empty and format
-                if isinstance(mars.getAgent(Location(i,j)),Shark) :
-                    self.label_grid[i][j].config(bg='#faa',text='shark')
-                elif isinstance(mars.getAgent(Location(i,j)),Plankton) :
-                    self.label_grid[i][j].config(bg='#afa',text='plant')
-                else:
-                    self.label_grid[i][j].config(bg='#fff',text='')
+                # check if not empty
+                if isinstance(mars.get_agent(Location(i,j)),Rock) :
+                    self.label_grid[i][j].config(bg='#000',fg='#fff',text='Rock')
+                elif isinstance(mars.get_agent(Location(i,j)),Rover) :
+                    self.label_grid[i][j].config(bg='#0a0',text='Rover')
+                elif isinstance(mars.get_agent(Location(i,j)),Spaceship) :
+                    self.label_grid[i][j].config(bg='#f00',text='Spaceship')
+                else :
+                    self.label_grid[i][j].config(bg='#ddd',text='')
     
     def add_observer(self,observer):
         self.observers.append(observer)

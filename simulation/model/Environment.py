@@ -12,18 +12,18 @@ class Environment(ABC):
         pass
 
     @abstractmethod
-    def getAgent(self,location:Location):
+    def get_agent(self,location:Location):
         pass
 
     @abstractmethod
-    def setAgent(self,agent:Agent,location:Location):
+    def set_agent(self,agent:Agent,location:Location):
         pass
 
     @abstractmethod
-    def getHeight(self):
+    def get_height(self):
         pass
 
     @abstractmethod
-    def getWidth(self):
+    def get_width(self):
         pass
         

@@ -4,14 +4,14 @@ class Location:
         self.__x = x
         self.__y = y
     
-    def getX(self):
+    def get_x(self):
         return int(self.__x)
 
-    def getY(self):
+    def get_y(self):
         return int(self.__y)
 
-    def setX(self,x:int):
+    def set_x(self,x:int):
         self.__x = x
 
-    def setY(self,y:int):
+    def set_y(self,y:int):
         self.__y = y

@@ -16,11 +16,9 @@ class Simulator():
         #Run while true
         while self._isRunning:
             #update, render, then sleep 
-            print("in loop")
             self._update()
             self._render()
             sleep(self.__calcSleepTime())
-        print("after loop")
 
     def __calcSleepTime(self):
         if self._speed > Config.max_sim_speed:

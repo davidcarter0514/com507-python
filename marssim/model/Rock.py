@@ -7,8 +7,8 @@ class Rock(Agent):
         super().__init__(location)
         self.__rock_energy = MarsConfig.ROCK_MAX_ENERGY
 
-    def act(self):
+    def act(self,mars):
         # Decrease Energy, until at min energy
-        if self.rock_energy > MarsConfig.ROCK_MIN_ENERGY:
-            self.rock_energy -= 1
+        if self.__rock_energy > MarsConfig.ROCK_MIN_ENERGY:
+            self.__rock_energy -= 1
 

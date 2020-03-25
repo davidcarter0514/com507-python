@@ -21,15 +21,15 @@ class Spaceship(Agent):
 
     def deploy_rovers(self,mars:Mars,num_rovers:int):
         # deployRovers:
-        freeLocations = mars.findFreeLocations(super().getLocation())
+        free_locations = mars.find_free_locations(super().get_location())
 
         deploy_rovers = num_rovers
-        if len(freeLocations) <= deploy_rovers:
-            deploy_rovers = len(freeLocations)
-            roverLocations = freeLocations
+        if len(free_locations) <= deploy_rovers:
+            deploy_rovers = len(free_locations)
+            rover_locations = free_locations
         else:
-            roverLocations = random.sample(freeLocations,deploy_rovers)
+            rover_locations = random.sample(free_locations,deploy_rovers)
         
-        for location in roverLocations :
-            mars.setAgent(Rover(location,super().getLocation()),location)
+        for location in rover_locations :
+            mars.set_agent(Rover(location,super().get_location()),location)
     
