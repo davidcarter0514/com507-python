@@ -14,6 +14,8 @@ class MarsSim(Simulator,Observer):
         super().__init__()
         self.__observer_state = "STOP"
         self.__mars = Mars()
+        self.__agents = []
+        self.__step = 0
 
     def _prepare(self):
         mars_width = self.__mars.get_width()
@@ -23,39 +25,47 @@ class MarsSim(Simulator,Observer):
         spaceship_location_i = random.randint(0,mars_width-1)
         spaceship_location_j = random.randint(0,mars_height-1)
         spaceship_location = Location(spaceship_location_i,spaceship_location_j)
-        self.__mars.set_agent(Spaceship(spaceship_location),spaceship_location)    
+        spaceship = Spaceship(spaceship_location)
+        self.__mars.set_agent(spaceship,spaceship_location)
+        self.__agents.append(spaceship)
 
         # deploy rovers
-        spaceship = self.__mars.get_agent(spaceship_location)
-        spaceship.deploy_rovers(self.__mars,MarsConfig.INITIAL_ROVERS)
+        deployed_rovers = spaceship.deploy_rovers(self.__mars,MarsConfig.INITIAL_ROVERS)
+        for rover in deployed_rovers:
+            self.__agents.append(rover)
 
         # spawn rocks
         for i in range(0,mars_width,1):
             for j in range(0,mars_height,1):
-                if self.__mars.get_agent(Location(i,j)) == None and random.randint(0,100) < MarsConfig.ROCK_SPAWN_RATE :
-                    self.__mars.set_agent(Rock(Location(i,j)),Location(i,j))                    
+                if self.__mars.get_agent(Location(i,j)) == None and random.randint(0,99) < MarsConfig.ROCK_SPAWN_RATE :
+                    location = Location(i,j)
+                    rock = Rock(location)
+                    self.__mars.set_agent(rock,location)
+                    self.__agents.append(rock)
+
 
         # initiate GUI
-        self.gui = MarsGui(self.__mars)
+        self.gui = MarsGui(self.__mars, self.__step)
         self.gui.add_observer(self)
 
     def _render(self):
-        # print("Rendering...")
+        # display current state in gui
         self.gui.update_idletasks()
         self.gui.update()
 
     def _update(self):
-        # print("Updating...")
+        # instruct agents to act
         if self.__observer_state == "START" or self.__observer_state == "STEP":
-            
-            agent_list = self.__mars.get_agent_list()
-            for agent in agent_list:
+
+            self.__step += 1
+
+            for agent in self.__agents:
                 agent.act(self.__mars)
 
             if self.__observer_state == "STEP":
                 self.__observer_state = "STOP"
 
-            self.gui.refresh(self.__mars)
+            self.gui.refresh(self.__mars, self.__step)
 
     def _reset(self):
         pass

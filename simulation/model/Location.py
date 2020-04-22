@@ -15,3 +15,6 @@ class Location:
 
     def set_y(self,y:int):
         self.__y = y
+
+    def print_location(self) :
+        print("Location is ("+str(self.__x)+","+str(self.__y)+")")
