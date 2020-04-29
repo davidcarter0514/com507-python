@@ -9,6 +9,7 @@ class Spaceship(Agent):
     def __init__(self, location):
         super().__init__(location)
         self.__rock_collection = []
+        self.__rover_counter = 0
 
     def act(self, mars:Mars):
         # look for rovers, then empty rovers and recharge
@@ -27,7 +28,7 @@ class Spaceship(Agent):
                 self.__rock_collection.append(rover.remove_rock())
 
             # Recharge the rover
-            if rover.get_battery() < MarsConfig.ROVER_MAX_ENERGY :
+            if rover.get_battery() < MarsConfig.ROVER_MAX_ENERGY:
                 rover.set_battery(MarsConfig.ROVER_MAX_ENERGY)
 
     def deploy_rovers(self,mars:Mars,num_rovers:int):
@@ -43,8 +44,9 @@ class Spaceship(Agent):
         
         rovers_deployed = []
         spaceship_location  = self.get_location()
-        for location in rover_locations :
-            rover = Rover(location,spaceship_location)
+        for location in rover_locations:
+            self.__rover_counter += 1
+            rover = Rover(location,spaceship_location,self.__rover_counter)
             mars.set_agent(rover,location)
             rovers_deployed.append(rover)
 

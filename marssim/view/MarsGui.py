@@ -124,14 +124,16 @@ class MarsGui(Tk):
                         ,fg='#ccc'
                         
                         )
+
+                agent = mars.get_agent(Location(i,j))
                 # check if not empty
-                if isinstance(mars.get_agent(Location(i,j)),Rock) :
+                if isinstance(agent,Rock):
                     self.label_grid[i][j].config(bg='#000')
-                elif isinstance(mars.get_agent(Location(i,j)),Rover) :
-                    self.label_grid[i][j].config(bg='#0a0')
-                elif isinstance(mars.get_agent(Location(i,j)),Spaceship) :
+                elif isinstance(agent,Rover):
+                    self.label_grid[i][j].config(bg='#0a0', text = "R" + str(agent.get_id()))
+                elif isinstance(agent,Spaceship):
                     self.label_grid[i][j].config(bg='#f00')
-                else :
+                else:
                     self.label_grid[i][j].config(bg='#ddd')
                 
     def __add_button_frame(self):
@@ -220,14 +222,14 @@ class MarsGui(Tk):
             for j in range(0,mars_height,1):
                 agent = mars.get_agent(Location(i,j))
                 # check if not empty
-                if isinstance(agent,Rock) :
-                    self.label_grid[i][j].config(bg='#000')
-                elif isinstance(agent,Rover) :
-                    self.label_grid[i][j].config(bg='#0a0')
-                elif isinstance(agent,Spaceship) :
-                    self.label_grid[i][j].config(bg='#f00')
-                else :
-                    self.label_grid[i][j].config(bg='#ddd')
+                if isinstance(agent,Rock):
+                    self.label_grid[i][j].config(bg='#000', text = '('+str(i)+','+str(j)+')')
+                elif isinstance(agent,Rover):
+                    self.label_grid[i][j].config(bg='#0a0', text = "R" + str(agent.get_id()))
+                elif isinstance(agent,Spaceship):
+                    self.label_grid[i][j].config(bg='#f00', text = '('+str(i)+','+str(j)+')')
+                else:
+                    self.label_grid[i][j].config(bg='#ddd', text = '('+str(i)+','+str(j)+')')
 
         self.step_button.configure(text = "STEP ("+str(step)+")")
 

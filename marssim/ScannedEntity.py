@@ -11,5 +11,5 @@ class ScannedEntity:
     def get_location(self):
         return self.__location
 
-    def update_location(self,location:Location) :
+    def update_location(self,location:Location):
         self.__location = location
