@@ -242,3 +242,44 @@ class MarsGui(Tk):
     def notify_observer(self):
         for observer in self.observers:
             observer.process(self.interaction_state)
+
+    # def __add_battery_pane(self):
+    #     self.legend_frame = Frame()
+    #     self.legend_frame.grid(row = 3,column = 0)
+    #     self.legend_frame.config(padx=10, pady=10)
+
+
+    # def __add_rover_battery(self,mars:Mars):
+    #     self.battery_grid = []
+    #     for a in range(0,mars_height,1):
+    #         self.label_grid.append([None]*mars_width)
+
+    #     # populate label grid with labels and format if none empty
+    #     for i in range (0,mars_width,1):
+    #         for j in range(0,mars_height,1):
+
+    #             self.label_grid[i][j] = Label(self.environment_frame)
+    #             self.label_grid[i][j].grid(row=i,column=j,sticky=W+E)
+    #             self.label_grid[i][j].config(
+    #                     bg='#fff',
+    #                     width=5,
+    #                     height=2,
+    #                     bd=1,
+    #                     relief='ridge'
+
+    #                     # testing - show location coordinates
+    #                     ,text = '('+str(i)+','+str(j)+')'
+    #                     ,fg='#ccc'
+                        
+    #                     )
+
+    #             agent = mars.get_agent(Location(i,j))
+    #             # check if not empty
+    #             if isinstance(agent,Rock):
+    #                 self.label_grid[i][j].config(bg='#000')
+    #             elif isinstance(agent,Rover):
+    #                 self.label_grid[i][j].config(bg='#0a0', text = "R" + str(agent.get_id()))
+    #             elif isinstance(agent,Spaceship):
+    #                 self.label_grid[i][j].config(bg='#f00')
+    #             else:
+    #                 self.label_grid[i][j].config(bg='#ddd')

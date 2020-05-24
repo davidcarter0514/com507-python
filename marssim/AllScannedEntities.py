@@ -1,7 +1,6 @@
 from marssim.ScannedEntity import ScannedEntity
 from simulation.model.Location import Location
 
-
 class AllScannedEntities:
     def __init__(self):
         self.__scanned_entities = []

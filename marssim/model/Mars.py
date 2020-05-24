@@ -134,25 +134,26 @@ class Mars(Environment):
         distance_x = end_x - start_x
         distance_y = end_y - start_y
 
-        if distance_x < 0:
-            change_x = -1
-        elif distance_x > 0:
-            change_x = 1
-        else:
-            change_x = 0
+        # return number of minimum moves required to go end location
+        short_distance = max(abs(distance_x),abs(distance_y))
+        total_distance = abs(distance_x) + abs(distance_y)
+        
+        return short_distance
 
-        if distance_y < 0:
-            change_y = -1
-        elif distance_y > 0:
-            change_y = 1
-        else:
-            change_y = 0
+    def relative_distance_between_locations(self,start:Location,end:Location):
+        # returns distance and direction required for x and y
+        start_x = start.get_x()
+        start_y = start.get_y()
+        end_x = end.get_x()
+        end_y = end.get_y()
+
+        distance_x = end_x - start_x
+        distance_y = end_y - start_y
 
         # return number of minimum moves required to go end location
-        total_distance = max(abs(distance_x),abs(distance_y))
-        # print("Distance between (",start_x,",",start_y,") and (",end_x,",",end_y,") is", distance_x," + ",distance_y,"=",total_distance,"x move is",change_x,"y move is",change_y)
-
-        return [start, total_distance, change_x, change_y]
+        total_distance = abs(distance_x) + abs(distance_y)
+        
+        return total_distance
 
     def available_locations(self, location:Location, radius:int):
         # returns a list of the surrounding locations (x) of the given location (L) for a given radius (e.g. 1)
@@ -208,3 +209,10 @@ class Mars(Environment):
 
         # returns list of Locations
         return available_locations
+
+    def compare_locations(self, loc_1:Location, loc_2:Location):
+        if loc_1.get_x() == loc_2.get_x() and loc_1.get_y() == loc_2.get_y():
+            # returns true if locations are the same
+            return True
+        else:
+            return False
